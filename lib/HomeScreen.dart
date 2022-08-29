@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
             width: 270,
             height: 340,
             child: Card(
+              elevation: 9.0,
               child: Column(
                 children: [
                   /// Image Container
