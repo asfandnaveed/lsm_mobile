@@ -7,9 +7,50 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: HomeScreenSTF(),
+    );
+  }
+}
+
+
+class HomeScreenSTF extends StatefulWidget {
+  const HomeScreenSTF({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreenSTF> createState() => _HomeScreenSTFState();
+}
+
+class _HomeScreenSTFState extends State<HomeScreenSTF> {
+
+  List<String> productName = [
+    'Branded Perfume',
+    'Polo T-shirt',
+    'Sunglasses',
+    'Sofa'
+  ];
+
+  List<String> productPrice = [
+    '45.67',
+    '20.45',
+    '78.90',
+    '666.89'
+  ];
+
+  List<String> productImages = [
+    'assets/images/perfume.png',
+    'assets/images/shirt.png',
+    'assets/images/sunglass.png',
+    'assets/images/sofa.png'
+  ];
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: SafeArea(
         child: ListView.builder(
-          itemCount: 6,
+          itemCount: productName.length,
           itemBuilder: (BuildContext context, index){
             return Container(
               child: Stack(
@@ -31,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                           /// Image Container
                           Container(
                             height: 180,
-                            child: Image.network('https://prototype.analogenterprises.com/corvit/images/shoes.png'),
+                            child: Image.asset(productImages[index]),
                           ),
                           /// Product Name Container
                           Container(
@@ -63,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                           Container(
                             margin:EdgeInsets.only(top: 10.0),
                             child: Text(
-                              '\$ 9599.00 ',
+                              '\$ '+productPrice[index],
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
@@ -115,7 +156,7 @@ class HomeScreen extends StatelessWidget {
                       child: Container(
                         margin: EdgeInsets.only(left: 10),
                         child: Text(
-                          'Leather Shoes',
+                          productName[index],
                           style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w500,
@@ -135,3 +176,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
