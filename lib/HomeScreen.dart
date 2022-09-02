@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import 'package:http/http.dart' as http;
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -43,6 +47,42 @@ class _HomeScreenSTFState extends State<HomeScreenSTF> {
     'assets/images/sofa.png'
   ];
 
+  String baseurl = 'https://prototype.analogenterprises.com/corvit/';
+
+
+  void getProductsData () async{
+    
+    String url = 'https://prototype.analogenterprises.com/corvit/api.php';
+    
+    var response = await  http.get(Uri.parse(url));
+
+    var map =   jsonDecode(response.body);
+
+    productName.clear();
+    productImages.clear();
+    productPrice.clear();
+    
+    for(int i=0 ; i<map.length ;i++){
+      
+      productName.add(map[i]["p_name"]);
+      productPrice.add(map[i]["p_price"]);
+      productImages.add(map[i]["p_image"]);
+
+    }
+    setState((){
+      print('Value updated');
+    });
+
+
+
+  }
+
+
+  @override
+  initState(){
+    super.initState();
+    getProductsData();
+  }
 
 
   @override
@@ -72,7 +112,7 @@ class _HomeScreenSTFState extends State<HomeScreenSTF> {
                           /// Image Container
                           Container(
                             height: 180,
-                            child: Image.asset(productImages[index]),
+                            child: Image.network(baseurl+productImages[index]),
                           ),
                           /// Product Name Container
                           Container(
