@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:lsm_mobile/HomeScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -27,18 +30,6 @@ class _LoginScreenSTFState extends State<LoginScreenSTF> {
 
   void userLogin() async{
 
-    //Email corvit@sample.com
-    //password 123456
-    String url = 'https://prototype.analogenterprises.com/corvit/login.php';
-
-    Map<String,dynamic> map  = Map<String,dynamic>();
-
-    map['email']=email_controller.text;
-    map['password']=password_controller.text;
-
-    var response = await http.post(Uri.parse(url),body: map);
-
-    print(response.body);
 
   }
 
@@ -68,8 +59,30 @@ class _LoginScreenSTFState extends State<LoginScreenSTF> {
             ),
 
             ElevatedButton(
-                onPressed: (){
-                  userLogin();
+                onPressed: () async{
+                  //Email corvit@sample.com
+                  //password 123456
+                  String url = 'https://prototype.analogenterprises.com/corvit/login.php';
+
+                  Map<String,dynamic> map  = Map<String,dynamic>();
+
+                  map['email']=email_controller.text;
+                  map['password']=password_controller.text;
+
+                  var response = await http.post(Uri.parse(url),body: map);
+
+                  print(response.body);
+
+                  var res = jsonDecode(response.body);
+
+                  if(res['status']==true){
+
+                    Navigator.push(context,
+                     MaterialPageRoute(builder: (context)=> HomeScreen())
+                    );
+                  }
+
+
                 },
                 child: Text(
                   'LOGIN'
